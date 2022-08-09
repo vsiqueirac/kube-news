@@ -40,7 +40,7 @@ kind: Deployment
 metadata:
   name: kubenews
 spec:
-  replicas: 2
+  replicas: 20
   selector:
     matchLabels:
       app: kubenews
@@ -48,6 +48,10 @@ spec:
     metadata:
       labels:
         app: kubenews
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: kubenews
@@ -73,4 +77,4 @@ spec:
   - port: 80
     targetPort: 8080
     nodePort: 30000
-  type: NodePort
+  type: LoadBalancer
